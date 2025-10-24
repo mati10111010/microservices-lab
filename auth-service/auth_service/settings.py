@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-f4c26_se5zx^h(ep%40fwe@q55&tkse_d#9aa#93eyods81va!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# CONFIGURACION GLOBAL DE DJANGO
+# Archivo central que configura base de datos, las apps instaladas, la cache 
+# y seguridad (seguridad tuve que ponerlo a la fuerza para que funcione JWT)
 
 # Application definition
 
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #Regsitro de APPS
     'rest_framework', # Django REST Framework
     'corsheaders', # Para manejar CORS
     'users',
@@ -138,13 +141,14 @@ CACHES = {
         }
     }
 }
-
+# configuracion de JWT
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication', #
     )
 }
-
+# configuracion de JWT (son tokens con tiempo de vida)
+# esto es solo por seguridad
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), 
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7), 
@@ -152,5 +156,5 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
-
+# Usuario personalizado, usando email como campo de login
 AUTH_USER_MODEL = 'users.User'

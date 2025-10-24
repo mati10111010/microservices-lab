@@ -1,8 +1,9 @@
+# Dependencias para el servicio de autenticacion
 django==5.0
-djangorestframework==3.15
-djangorestframework-simplejwt==5.3
-psycopg2-binary
+djangorestframework==3.15 
+djangorestframework-simplejwt==5.3 #JWT
+psycopg2-binary #PostgreSQL
 redis
 django-cors-headers
 gunicorn
-django-redis
+django-redis #Backend de Cache
