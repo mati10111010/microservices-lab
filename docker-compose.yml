@@ -43,45 +43,65 @@ services:
 volumes:
   pgdata:
 
-books:
-    build: ./books-service
-    container_name: books_service
-    restart: always
-    environment:
-      # Configuración de base de datos específica para libros
-      DB_HOST: postgres
-      DB_NAME: books_db
-      DB_USER: devuser
-      DB_PASS: devpass
-      REDIS_HOST: redis
-    depends_on:
-      - postgres
-      - redis
-    ports:
-      - "8001:8000" # Expone el servicio de Libros en el puerto 8001
-    volumes:
-      - ./books-service:/app
+#books:
+ #   build: ./books-service
+  #  container_name: books_service
+   # restart: always
+    #environment:
+      #  Configuración de base de datos específica para libros
+     # DB_HOST: postgres
+      #DB_NAME: books_db
+      #DB_USER: devuser
+      #DB_PASS: devpass
+      #REDIS_HOST: redis
+    #depends_on:
+    #  - postgres
+    #  - redis
+    #ports:
+    #  - "8001:8000" # Expone el servicio de Libros en el puerto 8001
+    #volumes:
+    #  - ./books-service:/app
 
-loans:
-    build: ./loans-service
-    container_name: loans_service
+#loans:
+#    build: ./loans-service
+#    container_name: loans_service
+#    restart: always
+#    environment:
+#      # Configuración de base de datos específica para préstamos
+#      DB_HOST: postgres
+#      DB_NAME: loans_db
+ #     DB_USER: devuser
+#      DB_PASS: devpass
+#      REDIS_HOST: redis
+      # URLs para la Arquitectura Hexagonal (llamadas internas a otros servicios)
+#      USERS_API_URL: http://auth:9000  #Usar puerto interno 9000
+#      BOOKS_API_URL: http://books:9001 #Usar puerto interno 9001
+#    depends_on:
+#      - postgres
+#      - redis
+#      - auth
+#      - books
+#    ports:
+#      - "8002:9002" # Expone el servicio de Préstamos en el puerto 8002
+#    volumes:
+#      - ./loans-service:/app
+
+blog:
+    build: ./blog-service
+    container_name: blog_service
     restart: always
     environment:
-      # Configuración de base de datos específica para préstamos
+      DEBUG: 1
       DB_HOST: postgres
-      DB_NAME: loans_db
+      DB_NAME: blog_db   # Base de datos dedicada para Blog
       DB_USER: devuser
       DB_PASS: devpass
       REDIS_HOST: redis
-      # URLs para la Arquitectura Hexagonal (llamadas internas a otros servicios)
-      USERS_API_URL: http://auth:8000  # Llama al Auth-Service (nombre interno)
-      BOOKS_API_URL: http://books:8000 # Llama al Books-Service (nombre interno)
+      REDIS_PORT: 6379
     depends_on:
       - postgres
       - redis
-      - auth
-      - books
     ports:
-      - "8002:8000" # Expone el servicio de Préstamos en el puerto 8002
+      - "8001:8000" # Expone el servicio de Blog en el puerto 8001 local
     volumes:
-      - ./loans-service:/app
+      - ./blog-service:/app
