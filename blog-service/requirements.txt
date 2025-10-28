@@ -7,3 +7,4 @@ redis
 django-cors-headers
 gunicorn
 django-redis #Backend de Cache
+drf-spectacular
