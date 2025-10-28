@@ -5,6 +5,6 @@ from .views import (
     HealthCheckAPIView
 )
 urlpatterns = [
-    path('health/', HealthCheckAPIView.as_view(), name='health-check'), # <--- Nuevo
+    path('health/', HealthCheckAPIView.as_view(), name='health-check'),
     path('posts/', PostListAPIView.as_view(), name='post-list'),
 ]
