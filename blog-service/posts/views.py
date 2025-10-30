@@ -21,7 +21,6 @@ class HealthCheckAPIView(APIView):
         # basta con devolver un estado OK.
         return Response({"status": "ok", "service": "blog_service"}, status=status.HTTP_200_OK)
 
-# Tiempo de caché en segundos (ej. 5 minutos)
 CACHE_TTL_5MIN = 60 * 5 
 CACHE_TTL_1HOUR = 60 * 60
 @method_decorator(cache_page(CACHE_TTL_1HOUR), name='dispatch')
@@ -42,22 +41,17 @@ class PostListAPIView(generics.ListAPIView):
     """
     serializer_class = PostListSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    
-    # 1. Filtros personalizados (para filtrar por category__slug y status)
-    filterset_fields = {
-        'category__slug': ['exact'],
-        'status': ['exact'],
-    }
-    # 2. Búsqueda por texto (server-side search)
+    filterset_fields = ['category'] # Filtrado por categoría
+    # Búsqueda por texto (server-side search)
     search_fields = ['title', 'body']
     
-    # 3. Ordenamiento
+    # Ordenamiento
     ordering_fields = ['published_at', 'views']
     ordering = ['-published_at']
 
     def get_queryset(self):
         # Optimización CRÍTICA: Evita consultas N+1
-        return Post.objects.filter(status='published').select_related('category')
+        return Post.objects.select_related('category')
 
 class PostDetailAPIView(generics.RetrieveAPIView):
     """Endpoint para el detalle de un post. Incrementa el contador de vistas.

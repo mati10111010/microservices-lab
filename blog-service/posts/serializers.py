@@ -19,7 +19,7 @@ class PostListSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     
     # Campo para el autor (solo ID)
-    author_id = serializers.UUIDField(read_only=True) 
+    author_id = serializers.IntegerField(read_only=True) 
     author_display_name = serializers.CharField(read_only=True)
 
     class Meta:
@@ -28,7 +28,6 @@ class PostListSerializer(serializers.ModelSerializer):
             'id', 
             'title', 
             'slug', 
-            'excerpt', 
             'author_id',
             'author_display_name',
             'category', 
@@ -43,7 +42,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     Incluye el campo 'body' completo.
     """
     category = CategorySerializer(read_only=True)
-    author_id = serializers.UUIDField(read_only=True)
+    author_id = serializers.IntegerField(read_only=True)
     author_display_name = serializers.CharField(read_only=True)
 
     class Meta:
@@ -58,6 +57,5 @@ class PostDetailSerializer(serializers.ModelSerializer):
             'category', 
             'published_at', 
             'views',
-            'status',
         )
         read_only_fields = ('slug', 'published_at', 'views', 'author_display_name', 'author_id')

@@ -1,5 +1,5 @@
 import random
-from uuid import uuid4 # Usamos UUID para simular IDs de autor externos
+from uuid import uuid4 # Usamos UUID para simular IDs de autor externos (no se usa ya)
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from posts.models import Category, Post
@@ -43,7 +43,7 @@ class Command(BaseCommand):
         
         # Crear Posts
         posts_to_create = []
-        author_id_simulado = uuid4() # Usamos un solo ID de autor para simplificar
+        author_id_simulado = 1  # Usamos un ID entero para el autor según el modelo actual
 
         for i, title in enumerate(POST_TITLES * 2): # Duplicamos para tener más posts
             # Selección aleatoria
@@ -62,13 +62,10 @@ class Command(BaseCommand):
             post = Post(
                 title=f"{title} (ID {i+1})",
                 slug=slugify(f"{title} id {i+1}"),
-                excerpt=body_content[:150] + "...",
                 body=body_content,
                 category=category_obj,
                 author_id=author_id_simulado,
-                author_display_name="Dev Tester",
                 views=random.randint(10, 500),
-                status=random.choice(['published', 'draft', 'published', 'published'])
             )
             posts_to_create.append(post)
             
