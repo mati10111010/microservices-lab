@@ -1,0 +1,8 @@
+Django
+psycopg2-binary
+redis
+djangorestframework
+django-cors-headers
+python-decouple
+django-redis
+djangorestframework-simplejwt
